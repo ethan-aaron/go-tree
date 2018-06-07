@@ -9,15 +9,35 @@ type node struct {
 }
 
 func main() {
-	n := node{Next: &node{}, Data: "hi"}
-	fmt.Println(n.Child)
+	n := node{Child: &node{Child: &node{Child: &node{Data: "inner"}, Data: "mid 2"}, Data: "mid 1"}, Data: "outer"}
+	printTree(&n)
 }
 
 func printTreeR(node *node, depth int) {
-	// var i int
 	for node != nil {
 		if node.Child != nil {
-			//
+			for i := 0; i < (depth * 3); i++ {
+				fmt.Printf(" ")
+			}
+			fmt.Printf("{\n")
+			printTreeR(node.Child, depth+1)
+			for i := 0; i < (depth * 3); i++ {
+				fmt.Printf(" ")
+			}
+			fmt.Printf("{\n")
+
+			for i := 0; i < (depth * 3); i++ {
+				fmt.Printf(" ")
+			}
+			fmt.Printf("%s\n", node.Data)
+
+			node = node.Next
+		} else {
+			for i := 0; i < (depth * 3); i++ {
+				fmt.Printf(" ")
+			}
+			fmt.Printf("%s\n", node.Data)
+			node = node.Next
 		}
 	}
 }
